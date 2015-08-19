@@ -23,9 +23,6 @@ class AutotradeRpcServiceClient {
         }
     }
 
-    /**
-     * Возвращает токен клиента для получения цен, используется в методах : <a href="#GetItem">GetItem</a>, <a href="#GetItemsByGroup">GetItemsByGroup</a> , <a href="#GetAllItems">GetAllItems</a>, <a href="#GetDeposits">GetDeposits</a>, <a href="#GetPrices">GetPrices</a>
-     */
     private function sendRequest($method,$param = []) {
         $data = array(
             "auth_key"    => $this->auth_key,
@@ -46,7 +43,12 @@ class AutotradeRpcServiceClient {
         $result = curl_exec($ch);
         curl_close($ch);  // Seems like good practice
 
-        return json_decode($result);
+        $out = json_decode($result);
+        if ($out->faultcoded){
+            echo $out->faultstring."\n";
+            return false;
+        }
+        return $out;
     }
 
     public function GetStoragesList() {
