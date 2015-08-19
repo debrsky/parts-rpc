@@ -44,7 +44,7 @@ class AutotradeRpcServiceClient {
         curl_close($ch);  // Seems like good practice
 
         $out = json_decode($result);
-        if ($out->faultcoded){
+        if (isset($out->faultcoded)){
             echo $out->faultstring."\n";
             return false;
         }
