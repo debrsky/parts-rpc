@@ -15,11 +15,9 @@ class YandexDirectRpcServiceClient {
     private $auth_key;
 
     public function __construct() {
-        $this->api_url = 'https://api-sandbox.direct.yandex.ru/live/v4/json/';
-        //$this->login = \Yii::$app->params['yandexDirectLogin'];
-        $this->auth_key = \Yii::$app->params['yandexDirectToken'];
+        $this->api_url = 'https://api.direct.yandex.ru/live/v4/json/';
+        $this->auth_key = file_get_contents(\Yii::getAlias('@backend'.'/config/ydToken.inc'));
     }
-
     private function sendRequest($method,$params=[]) {
 
         # формирование запроса
