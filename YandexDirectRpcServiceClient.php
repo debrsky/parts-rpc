@@ -65,16 +65,27 @@ class YandexDirectRpcServiceClient {
         $params=[];
         return $this->sendRequest(__FUNCTION__,$params);
     }
+    public function GetCampaignsListFilter($Filter = []) {
+        $params=[];
+        if (count($Filter)){
+            $params['Filter'] = $Filter;
+        }
+        return $this->sendRequest(__FUNCTION__,$params);
+    }
     /**
      * https://tech.yandex.ru/direct/doc/dg-v4/reference/GetBanners-docpage/
      */
-    public function GetBanners(array $CampaignIDS, array $BannerIDS) {
+    public function GetBanners(array $CampaignIDS, array $BannerIDS = [],$GetPhrases='Yes',array $Filter=[]) {
         $params = [];
+        $params['GetPhrases'] = $GetPhrases;
         if (count($CampaignIDS)){
             $params['CampaignIDS'] = $CampaignIDS;
         }
         if (count($BannerIDS)){
             $params['BannerIDS'] = $BannerIDS;
+        }
+        if (count($Filter)){
+            $params['Filter'] = $Filter;
         }
         return $this->sendRequest(__FUNCTION__,$params);
     }
@@ -160,6 +171,12 @@ class YandexDirectRpcServiceClient {
                 'Mode'=>'SinglePrice',
                 'SinglePrice'=> $price
             ];
+        return $this->sendRequest(__FUNCTION__,$params);
+    }
+    /**
+     * https://tech.yandex.ru/direct/doc/dg-v4/reference/UpdatePrices-docpage/
+     */
+    public function UpdatePrices(array $params) {
         return $this->sendRequest(__FUNCTION__,$params);
     }
 }
